@@ -33,4 +33,8 @@ function readPostAddress(): string {
 const address = readPostAddress()
 mkdirSync(OUTPUT_DIR, { recursive: true })
 copyFileSync(join(BOT_DIR, 'POST.json'), join(OUTPUT_DIR, 'POST.json'))
+const written = readFileSync(join(OUTPUT_DIR, 'POST.json'), 'utf8')
+if (written !== readFileSync(join(BOT_DIR, 'POST.json'), 'utf8')) {
+  throw new Error('POST.json was not copied correctly')
+}
 console.log(`POST.json copied for ${address}`)
